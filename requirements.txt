@@ -1,5 +1,7 @@
-roboflow
-python-dotenv
 pandas
-pillow
-matplotlib
+scikit-learn
+python-dotenv
+kaggle
+chromadb
+openai
+anthropic

@@ -1,17 +1,17 @@
-# Delivery Damage Claims Automation
+# AML Transaction Monitoring & SAR Drafting Assistant
 
-Computer vision + LLM pipeline to automate first-pass triage of damaged parcel claims.
-Detects package damage from photos, reasons about severity using an LLM, and logs claim decisions.
+Fraud/AML detection pipeline on transaction data: lightweight anomaly detection,
+RAG-grounded typology matching against real AML guidance, and LLM-drafted
+Suspicious Activity Reports. Visualized in Power BI.
 
 ## Status
-🚧 In progress — Day 1: dataset acquisition
+🚧 In progress — repurposed from an earlier CV project; see commit history.
 
-## Datasets
-- [Damaged Package Detection](https://universe.roboflow.com/iot-project/damaged-package-detection) (classification)
-- [Parcel Damage Detection](https://universe.roboflow.com/university-of-moratuwa-ztkqd/parcel-damage-detection) (object detection)
+## Dataset
+- [PaySim Synthetic Financial Dataset](https://www.kaggle.com/datasets/ealaxi/paysim1)
 
 ## Setup
 1. `python -m venv venv` and activate it
 2. `pip install -r requirements.txt`
-3. Add your Roboflow API key to `.env` as `ROBOFLOW_API_KEY=...`
+3. Add API keys to `.env` (Kaggle, LLM provider)
 4. `python scripts/download_data.py`
