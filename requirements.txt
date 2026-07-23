@@ -3,5 +3,5 @@ scikit-learn
 python-dotenv
 kaggle
 chromadb
-openai
-anthropic
+#openai
+#anthropic

@@ -1,6 +1,8 @@
 # data
 data/raw/
-data/merged/
+data/eda_outputs
+data/model_outputs/*.csv
+!data/model_outputs/flagged_transactions_supervised.csv
 *.zip
 
 # secrets
