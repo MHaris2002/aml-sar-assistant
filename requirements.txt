@@ -1,0 +1,5 @@
+roboflow
+python-dotenv
+pandas
+pillow
+matplotlib

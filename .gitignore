@@ -1,0 +1,17 @@
+# data
+data/raw/
+data/merged/
+*.zip
+
+# secrets
+.env
+
+# python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# misc
+.DS_Store
+*.ipynb_checkpoints
