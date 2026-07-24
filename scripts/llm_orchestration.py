@@ -39,7 +39,7 @@ OUT_DIR = Path("data/sar_outputs")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # How many flagged transactions to process this run
-NUM_TRANSACTIONS = 3
+NUM_TRANSACTIONS = 25
 
 embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2"
