@@ -5,7 +5,7 @@ RAG-grounded typology matching against real AML guidance, and LLM-drafted
 Suspicious Activity Reports. Visualized in Power BI.
 
 ## Status
-🚧 In progress — repurposed from an earlier CV project; see commit history.
+🚧 In progress
 
 ## Dataset
 - [PaySim Synthetic Financial Dataset](https://www.kaggle.com/datasets/ealaxi/paysim1)
