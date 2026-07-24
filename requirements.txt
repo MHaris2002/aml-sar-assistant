@@ -3,5 +3,9 @@ scikit-learn
 python-dotenv
 kaggle
 chromadb
+chromadb
+pypdf
+sentence-transformers
+ollama
 #openai
 #anthropic

@@ -1,0 +1,71 @@
+[
+  {
+    "transaction_index": 0,
+    "summary": "The transaction involved a cash out of $143,332.00, which completely drained the origin account. The destination account received the funds, resulting in a balance increase from $482,652.15 to $716,367.34, but a balance error of -$90,383.19 was recorded for the destination account. The transaction was processed as a CASH_OUT type. The destination account's balance update was inconsistent with the transaction amount, indicating a discrepancy.",
+    "retrieval_query": "rapid full account drain immediate large withdrawal after account access account takeover",
+    "typology_analysis": "The evidence supports the category of ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD. This classification is justified by the transaction summary, which indicates a cash out that completely drained the origin account, and a balance error in the destination account, suggesting unauthorized access. The FinCEN advisory (FIN-2011-A016.pdf) also provides guidance on identifying account takeover activity, including irregularities such as unusual transaction activity and changes to customer and account profiles, which aligns with the discrepancies observed in the transaction summary. Although the match is not extremely strong, the information provided in the excerpts, particularly from FIN-2011-A016.pdf, provides more support for account takeover fraud than for money laundering typology.",
+    "sar_draft": "## Transaction Overview\nThe transaction in question involved a cash out of $143,332.00 from an origin account, which resulted in the complete depletion of the account's funds. The funds were transferred to a destination account, causing its balance to increase from $482,652.15 to $716,367.34. However, a balance error of -$90,383.19 was subsequently recorded for the destination account, indicating a discrepancy in the transaction processing.\n\n## Red Flags Identified\nSeveral red flags have been identified in this transaction. Firstly, the cash out completely drained the origin account, which is an unusual activity that may indicate unauthorized access. Secondly, the destination account's balance update was inconsistent with the transaction amount, resulting in a recorded balance error. This inconsistency suggests that there may be irregularities in the transaction processing or potential manipulation of account balances.\n\n## Typology Match\nThe evidence gathered supports the classification of this activity as ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD. The transaction characteristics, including the complete depletion of the origin account and the balance discrepancy in the destination account, align with indicators of account takeover activity as described in the FinCEN advisory (FIN-2011-A016.pdf). Although the match is not extremely strong, the available information provides more support for account takeover fraud than for other typologies such as money laundering.\n\n## Recommended Action\nBased on the analysis, it is recommended to file a Suspicious Activity Report (SAR) with FinCEN. The red flags identified and the typology match suggest a potential case of account takeover/unauthorized access fraud, which warrants further investigation and reporting to regulatory authorities. Filing a SAR will facilitate the sharing of information with law enforcement and regulatory agencies, potentially aiding in the prevention and prosecution of fraudulent activities.",
+    "retrieved_sources": [
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "ML_using_new_payment_methods.pdf",
+      "FIN-2016-A003.pdf",
+      "FIN-2011-A016.pdf"
+    ],
+    "retrieved_distances": [
+      0.473547101020813,
+      0.5001417994499207,
+      0.5425694584846497,
+      0.5585299134254456,
+      0.577351450920105,
+      0.5830678343772888
+    ]
+  },
+  {
+    "transaction_index": 1,
+    "summary": "The transaction is a transfer of $87,622.50 from the origin account to the destination account. The origin account was fully drained as a result, with its balance going from $87,622.50 to $0.00. However, the destination account balance remained at $0.00 after the transaction, which is unusual as the expected balance after the transfer would be $87,622.50. This discrepancy is reflected in the balance error at the destination account, which is $87,622.50.",
+    "retrieval_query": "malware credential theft sudden wire transfer unusual account activity account takeover unauthorized access",
+    "typology_analysis": "The evidence supports the category of ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD. This classification is justified by the FinCEN advisory (FIN-2011-A016.pdf) which describes account takeover activity involving unauthorized access to accounts, often through malware or other sophisticated methods, and notes that such activity may involve unusual transactions, such as sudden wire transfers. The transaction summary's description of the origin account being fully drained and the destination account balance remaining at $0.00 after the transaction is consistent with the advisory's description of account takeover activity. The match is relatively strong, as the advisory provides specific examples of account takeover scenarios that involve unauthorized transactions, similar to the transaction described in the summary.",
+    "sar_draft": "## Transaction Overview\nThe subject transaction involves a transfer of $87,622.50 from an origin account to a destination account, resulting in the origin account being fully drained, with its balance changing from $87,622.50 to $0.00. However, the destination account balance remained unchanged at $0.00 after the transaction, indicating a discrepancy. This discrepancy is highlighted by a balance error of $87,622.50 at the destination account, suggesting that the expected credit of $87,622.50 did not occur as anticipated.\n\n## Red Flags Identified\nSeveral red flags have been identified in this transaction. Firstly, the origin account was fully drained in a single transaction, which is unusual and may indicate unauthorized access or control. Secondly, the destination account did not reflect the expected balance increase after the transfer, suggesting that the funds may not have been properly credited or were immediately diverted. This inconsistency in account balances is a significant red flag, as it deviates from the normal expectations of how funds are transferred and accounted for between accounts.\n\n## Typology Match\nThe transaction characteristics align with the typology of ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD, as described in the FinCEN advisory FIN-2011-A016.pdf. This advisory outlines scenarios where account takeover involves unauthorized access to accounts, often facilitated by malware or sophisticated methods, leading to unusual transactions such as sudden, large wire transfers. The observed transaction, with its full drainage of the origin account and the failure of the destination account to reflect the transferred funds, matches the advisory's description of potential account takeover activity. The match is considered strong due to the specific examples provided in the advisory that resemble the transaction in question.\n\n## Recommended Action\nBased on the analysis, it is recommended to file a Suspicious Activity Report (SAR) with FinCEN. The evidence supporting account takeover/unauthorized access fraud, combined with the unusual nature of the transaction and the significant discrepancy in account balances, warrants further investigation and reporting to regulatory authorities. Filing a SAR will facilitate the sharing of this suspicious activity with law enforcement and regulatory agencies, potentially aiding in the prevention of further fraudulent activities and the protection of financial institutions and their customers.",
+    "retrieved_sources": [
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "FIN-2016-A003.pdf",
+      "ML_using_new_payment_methods.pdf"
+    ],
+    "retrieved_distances": [
+      0.36465775966644287,
+      0.39723724126815796,
+      0.40752315521240234,
+      0.4124308228492737,
+      0.43480169773101807,
+      0.4389767050743103
+    ]
+  },
+  {
+    "transaction_index": 2,
+    "summary": "The transaction involved a cash out of $90,204.54 from the origin account, resulting in the origin account being fully drained to a balance of $0.00. The destination account received the full amount, increasing its balance from $0.00 to $90,204.54. The transaction was classified as a CASH_OUT type. The fact that the origin account was fully drained in a single transaction is notable.",
+    "retrieval_query": "rapid full account drain immediate large withdrawal after account access account takeover",
+    "typology_analysis": "The evidence supports the category of ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD. The transaction summary notes that the origin account was fully drained in a single transaction, which is consistent with account takeover activity as described in FIN-2011-A016.pdf, where it is stated that account takeovers often involve unauthorized access to account information and may result in sudden wire transfers or changes to customer and account profiles. The fact that the destination account received the full amount and increased its balance from $0.00 to $90,204.54 also suggests a potential account takeover, as described in the same FinCEN advisory. The match is relatively strong, as the transaction summary aligns with the characteristics of account takeover activity outlined in the FinCEN advisory, although the evidence is not conclusive and additional information would be necessary to confirm the classification.",
+    "sar_draft": "## Transaction Overview\nThe subject transaction involved a cash out of $90,204.54 from the origin account, resulting in the origin account being fully drained to a balance of $0.00. The destination account received the full amount, increasing its balance from $0.00 to $90,204.54. This transaction was classified as a CASH_OUT type.\n\n## Red Flags Identified\nThe notable aspect of this transaction is that the origin account was fully drained in a single transaction, which is an unusual activity. This action resulted in the origin account having a balance of $0.00 after the transaction, while the destination account saw a significant increase in its balance from $0.00 to $90,204.54.\n\n## Typology Match\nThe evidence supports the category of ACCOUNT TAKEOVER / UNAUTHORIZED ACCESS FRAUD, as described in FIN-2011-A016.pdf. The characteristics of the transaction, including the full drainage of the origin account in a single transaction and the significant increase in the destination account's balance, align with the patterns of account takeover activity outlined in the FinCEN advisory. Although the match is relatively strong, the evidence is not conclusive, and additional information would be necessary to confirm the classification.\n\n## Recommended Action\nBased on the analysis, it is recommended to file a Suspicious Activity Report (SAR) due to the potential indication of account takeover/unauthorized access fraud. The unusual nature of the transaction, coupled with its alignment with known typologies of account takeover activity, warrants further review and reporting to regulatory authorities.",
+    "retrieved_sources": [
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "FIN-2011-A016.pdf",
+      "ML_using_new_payment_methods.pdf",
+      "FIN-2016-A003.pdf",
+      "FIN-2011-A016.pdf"
+    ],
+    "retrieved_distances": [
+      0.473547101020813,
+      0.5001417994499207,
+      0.5425694584846497,
+      0.5585299134254456,
+      0.577351450920105,
+      0.5830678343772888
+    ]
+  }
+]
