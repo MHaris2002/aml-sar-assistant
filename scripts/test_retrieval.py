@@ -1,12 +1,7 @@
 """
-Retrieval sanity check for the AML knowledge base.
-
-Tests two kinds of queries side by side:
-1. Raw technical/ledger-style phrasing (how PaySim summaries currently read)
-2. Real-world red-flag phrasing (how FinCEN/FATF documents actually describe fraud)
-
-Confirms whether the FinCEN account-takeover documents surface with
-better-phrased queries.
+Retrieval comparison test: standard top-k retrieval vs. neighbor-expanded
+retrieval (pulls in adjacent chunks around each match to avoid losing
+content split across a chunk boundary).
 
 Run from project root:
     python scripts/test_retrieval.py
@@ -26,46 +21,86 @@ embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
 client = chromadb.PersistentClient(path=str(CHROMA_DIR))
 collection = client.get_collection(name="aml_typologies", embedding_function=embedding_fn)
 
-test_queries = {
-    "Raw/technical phrasing": [
-        "cash out completely drained origin account destination balance discrepancy",
-        "account fully drained transfer destination balance did not update",
-    ],
-    "Real-world red-flag phrasing": [
-        "sudden complete withdrawal of entire account balance unauthorized access",
-        "rapid full account drain immediate large withdrawal after account access account takeover",
-        "malware credential theft sudden wire transfer unusual account activity",
-    ],
-}
+
+def retrieve_standard(query: str, n_results: int = N_RESULTS) -> list[dict]:
+    """Original method: just the top-k matches, no neighbors."""
+    results = collection.query(query_texts=[query], n_results=n_results)
+    return [
+        {"source": meta["source"], "text": doc, "distance": dist, "chunk_index": meta["chunk_index"]}
+        for doc, meta, dist in zip(
+            results["documents"][0], results["metadatas"][0], results["distances"][0]
+        )
+    ]
 
 
-def run_query(query: str):
-    print("=" * 70)
-    print(f"QUERY: {query}")
-    print("=" * 70)
-    results = collection.query(query_texts=[query], n_results=N_RESULTS)
+def retrieve_with_neighbors(query: str, n_results: int = N_RESULTS) -> list[dict]:
+    """New method: top-k matches PLUS each match's immediate neighbor chunks."""
+    results = collection.query(query_texts=[query], n_results=n_results)
 
-    fincen_hit = False
-    for i, (doc, meta, dist) in enumerate(zip(
+    seen_keys = set()
+    expanded = []
+
+    for doc, meta, dist in zip(
         results["documents"][0], results["metadatas"][0], results["distances"][0]
-    )):
+    ):
         source = meta["source"]
-        if "FIN-" in source:
-            fincen_hit = True
-        print(f"\n[Result {i+1}] source={source} | distance={dist:.4f}")
-        print(doc[:300].replace("\n", " "))
+        idx = meta["chunk_index"]
+        key = (source, idx)
+        if key not in seen_keys:
+            seen_keys.add(key)
+            expanded.append({"source": source, "text": doc, "distance": dist, "chunk_index": idx})
 
-    print(f"\n>>> FinCEN document appeared in top {N_RESULTS}: {fincen_hit}")
+        for neighbor_idx in [idx - 1, idx + 1]:
+            neighbor_key = (source, neighbor_idx)
+            if neighbor_key in seen_keys:
+                continue
+            neighbor_results = collection.get(
+                where={"$and": [{"source": source}, {"chunk_index": neighbor_idx}]}
+            )
+            if neighbor_results["ids"]:
+                seen_keys.add(neighbor_key)
+                expanded.append({
+                    "source": source,
+                    "text": neighbor_results["documents"][0],
+                    "distance": None,
+                    "chunk_index": neighbor_idx,
+                })
+
+    expanded.sort(key=lambda x: (x["source"], x["chunk_index"]))
+    return expanded
+
+
+def print_results(label: str, results: list[dict]):
+    print(f"\n--- {label} ({len(results)} chunks) ---")
+    for r in results:
+        dist_str = f"{r['distance']:.4f}" if r["distance"] is not None else "N/A (neighbor)"
+        print(f"\n[source={r['source']} | chunk_index={r['chunk_index']} | distance={dist_str}]")
+        print(r["text"][:250].replace("\n", " "))
+
+
+def compare_query(query: str):
+    print("=" * 80)
+    print(f"QUERY: {query}")
+    print("=" * 80)
+
+    standard = retrieve_standard(query)
+    expanded = retrieve_with_neighbors(query)
+
+    print_results("STANDARD (top-k only)", standard)
+    print_results("WITH NEIGHBORS (expanded)", expanded)
+
+    print(f"\n>>> Standard returned {len(standard)} chunks, expanded returned {len(expanded)} chunks")
+    print(f">>> Extra chunks added by neighbor expansion: {len(expanded) - len(standard)}")
     print()
 
 
 def main():
-    for category, queries in test_queries.items():
-        print(f"\n{'#'*70}")
-        print(f"# CATEGORY: {category}")
-        print(f"{'#'*70}\n")
-        for query in queries:
-            run_query(query)
+    test_queries = [
+        "malware credential theft sudden wire transfer unusual account activity account takeover unauthorized access",
+        "rapid full account drain immediate large withdrawal after account access account takeover",
+    ]
+    for query in test_queries:
+        compare_query(query)
 
 
 if __name__ == "__main__":

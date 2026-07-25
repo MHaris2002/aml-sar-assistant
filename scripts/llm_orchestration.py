@@ -106,12 +106,54 @@ def retrieve_typology_context(query: str, n_results: int = 6) -> list[dict]:
         )
     ]
 
+def retrieve_with_neighbors(query: str, n_results: int = 6, expand_top_n: int = 2) -> list[dict]:
+    """
+    Retrieves top-k matches. Only expands neighbors (adjacent chunk_index,
+    same source) for the top `expand_top_n` strongest matches, to avoid
+    pulling in low-value boilerplate around weaker matches.
+    """
+    results = collection.query(query_texts=[query], n_results=n_results)
+
+    seen_keys = set()
+    expanded = []
+
+    for rank, (doc, meta, dist) in enumerate(zip(
+        results["documents"][0], results["metadatas"][0], results["distances"][0]
+    )):
+        source = meta["source"]
+        idx = meta["chunk_index"]
+        key = (source, idx)
+        if key not in seen_keys:
+            seen_keys.add(key)
+            expanded.append({"source": source, "text": doc, "distance": dist, "chunk_index": idx})
+
+        if rank < expand_top_n:
+            for neighbor_idx in [idx - 1, idx + 1]:
+                neighbor_key = (source, neighbor_idx)
+                if neighbor_key in seen_keys:
+                    continue
+                neighbor_results = collection.get(
+                    where={"$and": [{"source": source}, {"chunk_index": neighbor_idx}]}
+                )
+                if neighbor_results["ids"]:
+                    seen_keys.add(neighbor_key)
+                    expanded.append({
+                        "source": source, "text": neighbor_results["documents"][0],
+                        "distance": None, "chunk_index": neighbor_idx,
+                    })
+
+    expanded.sort(key=lambda x: (x["source"], x["chunk_index"]))
+    return expanded
 
 def match_typology(transaction_summary: str, retrieved_chunks: list[dict]) -> str:
-    context_text = "\n\n".join(
-        f"[Source: {c['source']} | relevance_distance: {c['distance']:.4f}]\n{c['text']}"
-        for c in retrieved_chunks
-    )
+    def format_chunk(c):
+        if c["distance"] is not None:
+            label = f"relevance_distance: {c['distance']:.4f}"
+        else:
+            label = "neighboring context chunk (not independently scored)"
+        return f"[Source: {c['source']} | {label}]\n{c['text']}"
+
+    context_text = "\n\n".join(format_chunk(c) for c in retrieved_chunks)
     prompt = f"""You are an AML/fraud compliance analyst. Below is a transaction summary
 and excerpts from official regulatory documents (FinCEN and FATF).
 
@@ -183,7 +225,7 @@ def main():
         print("\nStep 2: Retrieving typology context + matching...")
         retrieval_query = build_retrieval_query(row)
         print(f"[Retrieval query used]: {retrieval_query}")
-        retrieved = retrieve_typology_context(retrieval_query)
+        retrieved = retrieve_with_neighbors(retrieval_query, expand_top_n=2)
         typology = match_typology(summary, retrieved)
         print(typology)
 

@@ -17,7 +17,7 @@ CHROMA_DIR = Path("data/knowledge_base/chroma_store")
 CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 
 CHUNK_SIZE = 800  # characters per chunk — small enough for precise retrieval
-CHUNK_OVERLAP = 100
+CHUNK_OVERLAP = 250
 
 
 def extract_text_chunks(pdf_path: Path):
