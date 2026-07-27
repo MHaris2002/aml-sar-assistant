@@ -7,5 +7,6 @@ chromadb
 pypdf
 sentence-transformers
 ollama
+tavily-python
 #openai
 #anthropic

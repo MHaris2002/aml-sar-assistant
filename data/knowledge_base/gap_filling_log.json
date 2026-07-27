@@ -1,0 +1,16 @@
+[
+  {
+    "transaction_index": 6,
+    "query": "suspicious activity report large transaction financial institution monitoring red flags",
+    "found": true,
+    "ingested_document": "sarnarrcompletguidfinal_112003.pdf",
+    "chunks_added": 102
+  },
+  {
+    "transaction_index": 6,
+    "query": "suspicious activity report large transaction financial institution monitoring red flags",
+    "found": true,
+    "ingested_document": "report_reference.pdf",
+    "chunks_added": 12
+  }
+]

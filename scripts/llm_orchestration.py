@@ -80,13 +80,6 @@ Transaction details:
 
 
 def build_retrieval_query(row: pd.Series) -> str:
-    """
-    Translates the technical PaySim transaction pattern into real-world
-    red-flag language. Regulatory documents describe fraud behaviorally
-    (credential theft, unauthorized access, wire transfer fraud) rather
-    than in terms of ledger/balance arithmetic - so retrieval must be
-    phrased that way to surface the right documents.
-    """
     if row['orig_balance_drained'] and row['dest_balance_stayed_zero']:
         return ("malware credential theft sudden wire transfer unusual account "
                 "activity account takeover unauthorized access")
@@ -94,7 +87,8 @@ def build_retrieval_query(row: pd.Series) -> str:
         return ("rapid full account drain immediate large withdrawal after "
                 "account access account takeover")
     else:
-        return "unusual large transfer suspicious account activity"
+        return ("suspicious activity report large transaction financial "
+                "institution monitoring red flags")
 
 
 def retrieve_typology_context(query: str, n_results: int = 6) -> list[dict]:
