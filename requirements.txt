@@ -8,5 +8,8 @@ pypdf
 sentence-transformers
 ollama
 tavily-python
+fastapi
+uvicorn
+joblib
 #openai
 #anthropic

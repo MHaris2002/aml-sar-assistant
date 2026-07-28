@@ -76,6 +76,10 @@ def main():
     )
     model.fit(X_train, y_train)
 
+    import joblib
+    joblib.dump(model, "data/model_outputs/random_forest_model.joblib")
+    print("Model saved to data/model_outputs/random_forest_model.joblib")
+
     y_pred = model.predict(X_test)
 
     print("\n" + "=" * 50)
