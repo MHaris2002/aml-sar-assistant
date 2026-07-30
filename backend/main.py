@@ -39,12 +39,12 @@ def root():
 
 
 @app.get("/transactions")
-def list_transactions(limit: int = 50, flagged_only: bool = True):
+def list_transactions(limit: int = 50, flagged_only: bool = False):
     conn = get_db()
     query = "SELECT * FROM transactions"
     if flagged_only:
         query += " WHERE predicted_fraud = 1"
-    query += f" LIMIT {limit}"
+    query += f" ORDER BY RANDOM() LIMIT {limit}"
     rows = conn.execute(query).fetchall()
     conn.close()
     return [dict(row) for row in rows]

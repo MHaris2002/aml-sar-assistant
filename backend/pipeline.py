@@ -4,6 +4,7 @@ backend for the /analyze endpoint.
 """
 
 import os
+os.environ["HF_HUB_OFFLINE"] = "1"
 import time
 import joblib
 import pandas as pd
