@@ -7,7 +7,7 @@ This project was built as a full-stack applied ML/AI portfolio piece, with an em
 <<<<<<< HEAD
 ## System Flow
 
-![Architecture Flow](screenshots/flow.png)
+![Architecture Flow](screenshots/flow.PNG)
 
 =======
 >>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
