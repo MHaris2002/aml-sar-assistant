@@ -4,13 +4,10 @@ An end-to-end AI system that detects potentially fraudulent financial transactio
 
 This project was built as a full-stack applied ML/AI portfolio piece, with an emphasis on honest, evidence-backed engineering: every design decision here was validated against real numbers, and every dead end is documented rather than hidden.
 
-<<<<<<< HEAD
 ## System Flow
 
-![Architecture Flow](screenshots/flow.png)
+![Architecture Flow](screenshots/flow.PNG)
 
-=======
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 ## What it does
 
 1. **Detects** fraudulent transactions from raw financial data using a supervised ML model
@@ -20,44 +17,12 @@ This project was built as a full-stack applied ML/AI portfolio piece, with an em
 5. **Fills its own knowledge gaps** — when retrieval confidence is weak, a separate background job searches trusted regulatory domains and ingests better source material automatically
 6. **Visualizes** results in Power BI and a live mobile app
 
-<<<<<<< HEAD
-=======
-## Architecture
-
-```
-PaySim dataset (6.3M transactions)
-        │
-        ▼
-Feature engineering (balance-mismatch detection)
-        │
-        ▼
-Random Forest classifier  ──────────────►  97.85% precision, 99.63% recall
-        │
-        ▼
-RAG knowledge base (FinCEN + FATF PDFs, ChromaDB, sentence-transformers embeddings)
-        │
-        ▼
-LLM orchestration (Groq / Llama 3.3 70B)
-   ├─ Summarize transaction
-   ├─ Retrieve + classify typology (grounded, hallucination-checked)
-   └─ Draft SAR narrative
-        │
-        ▼
-SQLite database ──► FastAPI backend ──► Power BI dashboard
-                            │
-                            └──► React Native mobile app
-```
-
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 ## The real story (not just the happy path)
 
 This project deliberately documents its failures and fixes, because that's where the actual engineering judgment shows:
 
-<<<<<<< HEAD
 - **Started with unsupervised anomaly detection (Isolation Forest)** — got 1.9% recall. Diagnosed why (feature scale dominance, and having labeled data but not using it), switched to supervised learning, got 99.63% recall.
-=======
 - **Started with unsupervised anomaly detection (Isolation Forest)** — got 1.9% recall. Diagnosed why (feature scale dominance, and having labeled data but not using them), switched to supervised learning, got 99.63% recall.
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 - **RAG initially returned "weak match" on every transaction** — investigated why, found the detection model catches ledger-arithmetic anomalies (an account-takeover-style pattern) while the initial knowledge base only covered network-style money laundering typologies. Added FinCEN's specific Account Takeover advisory (FIN-2011-A016) to close the gap.
 - **Even with the right documents, retrieval still failed** — the technical/ledger-style language used to describe transactions didn't semantically match how real regulatory documents describe fraud (behaviorally: "credential theft," "sudden wire transfer," not "balance error"). Fixed by translating technical patterns into red-flag language before querying — validated with a side-by-side retrieval test (0/6 vs 6/6 hit rate).
 - **Chunk-boundary content loss** — added chunk overlap and neighbor-expansion retrieval (pulling in adjacent chunks around strong matches), which improved the RAG "strong match" rate from 80% to 96% (20/25 → 24/25) on a 25-transaction validation batch.
@@ -103,10 +68,7 @@ This project deliberately documents its failures and fixes, because that's where
 │   ├── build_knowledge_base.py # PDF chunking + embedding
 │   ├── llm_orchestration.py    # 3-role LLM pipeline (summarize/classify/draft)
 │   ├── gap_filling_search.py   # Autonomous knowledge base expansion
-<<<<<<< HEAD
 │   ├── add_clear_transactions.py  # Adds legitimate transactions for dashboard/app balance
-=======
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 │   ├── build_database.py       # SQLite consolidation
 │   └── export_for_powerbi.py
 ├── backend/
@@ -114,11 +76,8 @@ This project deliberately documents its failures and fixes, because that's where
 │   └── pipeline.py             # Core pipeline logic, importable
 ├── dashboard/
 │   └── AML_SAR_Dashboard.pbix  # 3-page Power BI report
-<<<<<<< HEAD
 ├── docs/
 │   └── architecture-flow.png
-=======
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 └── requirements.txt
 ```
 
@@ -134,10 +93,7 @@ Add a `.env` file:
 ```
 GROQ_API_KEY=your_key_here
 TAVILY_API_KEY=your_key_here
-<<<<<<< HEAD
 HF_HUB_OFFLINE=1
-=======
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 ```
 
 Download [PaySim](https://www.kaggle.com/datasets/ealaxi/paysim1) into `data/raw/`.
@@ -148,7 +104,6 @@ python scripts/eda.py
 python scripts/supervised_model.py
 python scripts/build_knowledge_base.py
 python scripts/llm_orchestration.py
-<<<<<<< HEAD
 python scripts/add_clear_transactions.py
 python scripts/build_database.py
 ```
@@ -159,16 +114,12 @@ python scripts/build_database.py
 ```
 
 Start the API:
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 ```bash
 uvicorn backend.main:app --reload --host 0.0.0.0
 ```
 
-<<<<<<< HEAD
 Interactive API docs available at `http://localhost:8000/docs`.
 
-=======
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
 ## Model performance
 
 | Approach | Precision | Recall |
@@ -193,8 +144,4 @@ RAG match confidence (25-transaction validation batch):
 
 ## Related
 
-<<<<<<< HEAD
 - [Mobile app (aml-sar-mobile)](https://github.com/MHaris2002/aml-sar-mobile) — React Native client for this backend
-=======
-- [Mobile app (aml-sar-mobile)](https://github.com/MHaris2002/aml-sar-mobile) — React Native client for this backend
->>>>>>> f370ea31f522d4c20b062952564e41ec87fe4e92
